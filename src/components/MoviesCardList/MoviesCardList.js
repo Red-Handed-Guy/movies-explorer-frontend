@@ -26,7 +26,7 @@ export default function MoviesCardList() {
           )
         })}
       </div>
-      {location.pathname === '/movies' ? (
+      {location.pathname === '/signin' ? (
         <button onClick={addCards} className="movies-list__button button">
           Ещё
         </button>

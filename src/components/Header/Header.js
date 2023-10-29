@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import headerLogo from '../../img/header/logo.svg'
-//{`header__list header__list_type_profile ${isLoggedin ? 'header__list_active' : ''}`}
 
-const isLoggedin = true
-// ({isActive}) => `header__list-link link${isActive ? ".header__list-link_active" : ""}`
+const isLoggedin = false
+
 export default function Header() {
   return (
     <header className="header">
@@ -37,12 +36,12 @@ export default function Header() {
             !isLoggedin ? 'header__list_active' : ''
           }`}>
           <li className="header__list-item">
-            <Link className="header__list-link link" to="/">
+            <Link className="header__list-link link" to="/signup">
               Регистрация
             </Link>
           </li>
           <li className="header__list-item">
-            <Link className="header__list-link header__list-link_type_login button" to="/">
+            <Link className="header__list-link header__list-link_type_login button" to="/signin">
               Войти
             </Link>
           </li>

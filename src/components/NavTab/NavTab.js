@@ -1,6 +1,6 @@
 export default function NavTab() {
   return (
-    <nav className="nav-tab">
+    <nav className="nav-tab promo__nav-tab">
       <li className="nav-tab__item">
         <a className="nav-tab__link button" href="#about-project">О проекте</a>
       </li>
