@@ -1,0 +1,78 @@
+.header {
+  min-height: 74px;
+  box-sizing: border-box;
+  padding: 0 70px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header__nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  object-position: center;
+  object-fit: contain;
+  max-width: 38px;
+  max-height: 38px;
+}
+
+.header__list {
+  display: none;
+  list-style: none;
+  font-size: 13px;
+  column-gap: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  margin: 0;
+  padding: 0 0 0 64px;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.header__list_active {
+  display: flex;
+}
+
+.header__list_type_authorization {
+  font-size: 12px;
+  line-height: 16px;
+  column-gap: 30px;
+  font-weight: 500;
+}
+
+.header__list-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.header__list-link_active{
+  font-weight: 500;
+}
+
+.header__list-link_type_login {
+  padding: 8px 20px;
+  border-radius: 3px;
+  background-color: #3ddc84;
+  color: #000;
+}
+
+.header__user {
+  display: none;
+  color: #fff;
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+  padding: 8px 22px;
+  border-radius: 20px;
+  background: #313131;
+  font-weight: 500;
+}
+
+.header__user_active {
+  display: inline-block;
+}
