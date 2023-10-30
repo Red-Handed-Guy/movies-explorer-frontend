@@ -3,6 +3,12 @@
   padding: 110px 70px 125px;
 }
 
+@media (max-width: 768px) {
+  .about-me {
+    padding: 90px 50px 90px;
+  }
+}
+
 .about-me__content-wrapper {
   margin-top: 66px;
   display: flex;
@@ -17,8 +23,22 @@
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  .about-me__avatar {
+    width: 255px;
+    height: 307px;
+  }
+}
+
 .about-me__column {
-  max-width: 660px;
+  max-width: 600px;
+}
+
+@media (max-width: 1060px) {
+  .about-me__column {
+    max-width: 100%;
+    padding-right: 49px;
+  }
 }
 
 .about-me__column-title {
@@ -30,12 +50,27 @@
   margin: 0;
 }
 
+@media (max-width: 768px) {
+  .about-me__column-title {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -1.6px;
+  }
+}
+
 .about-me__column-subtitle {
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
-  margin: 18px 0 0 0;
+  margin: 17px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .about-me__column-subtitle {
+    font-size: 12px;
+    line-height: 18px;
+  }
 }
 
 .about-me__column-text {
@@ -44,6 +79,14 @@
   font-style: normal;
   line-height: 22px;
   margin: 26px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .about-me__column-text {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 20px 0 0 0;
+  }
 }
 
 .about-me__column-git {
@@ -57,6 +100,18 @@
   margin: 99px 0 0 0;
 }
 
+@media (max-width: 768px) {
+  .about-me__column-git {
+    margin: 87px 0 0 0;
+  }
+}
+
 .about-me__portfolio {
   margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  .about-me__portfolio {
+    margin-top: 90px;
+  }
 }

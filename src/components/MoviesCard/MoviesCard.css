@@ -5,6 +5,13 @@
   position: relative;
 }
 
+@media (max-width: 900px) {
+  .movie-card {
+    max-width: 339px;
+    max-height: 190px;
+  }
+}
+
 .movie-card__img {
   width: 100%;
   aspect-ratio: 360/201;
@@ -21,6 +28,12 @@
   column-gap: 30px;
   box-sizing: border-box;
   padding: 12px 14px 0;
+}
+
+@media (max-width: 900px) {
+  .movie-card__information {
+    padding: 22px 0 0 0;
+  }
 }
 
 .movie-card__title {

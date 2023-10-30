@@ -31,13 +31,15 @@
   font-style: normal;
   font-weight: 400;
   line-height: 18px;
-  padding: 16px 20px;
+  padding: 14px 18px;
   margin: 0;
   border-radius: 8px;
+  border: 1px solid #2f2f2f;
   box-sizing: border-box;
 }
 
 .search-form__input:focus {
+  border: 1px solid #3ddc84;
   outline: none;
 }
 
@@ -63,6 +65,12 @@
   border-bottom: 1px solid #424242;
 }
 
+@media (max-width: 768px) {
+  .search-form__switch-wrapper {
+    padding: 42px 0 40px 0;
+  }
+}
+
 .search-form__switch-text {
   margin: 0;
   color: #fff;
@@ -79,6 +87,7 @@
   width: 34px;
   height: 14px;
 }
+
 
 .search-form__check-input {
   opacity: 0;

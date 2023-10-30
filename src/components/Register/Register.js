@@ -11,7 +11,7 @@ export default function Register() {
         <img src={headerLogo} alt="Логотип сайта в виде зеленого бублика" className="auth__logo" />
       </Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
-      <form name="login" className="auth__form">
+      <form name="register" className="auth__form">
         <ul className="auth__input-list">
           <li className="auth__input-item">
             <p className="auth__input-name">Имя</p>
@@ -29,7 +29,7 @@ export default function Register() {
             <p className="auth__input-err"></p>
           </li>
         </ul>
-        <button className="button auth__submit-button auth__submit-button_type_reg">
+        <button className="button blue-button auth__submit-button auth__submit-button_type_reg">
           Зарегистрироваться
         </button>
       </form>

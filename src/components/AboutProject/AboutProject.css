@@ -1,12 +1,24 @@
 .about-project {
   box-sizing: border-box;
-  padding: 110px 70px 98px;
+  padding: 110px 70px 90px;
+}
+
+@media (max-width: 768px) {
+  .about-project {
+    padding: 90px 50px 77px;
+  }
 }
 
 .about-project__columns {
   display: flex;
   margin-top: 70px;
   column-gap: 50px;
+}
+
+@media (max-width: 768px) {
+  .about-project__columns {
+    column-gap: 30px;
+  }
 }
 
 .about-project__column-title {
@@ -25,17 +37,32 @@
   line-height: 20px;
 }
 
+@media (max-width: 768px) {
+  .about-project__column-subtitle {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 22px 0 0 0;
+  }
+}
+
 .about-project__line {
   display: flex;
+  margin-top: 110px;
+}
+
+@media (max-width: 768px) {
+  .about-project__line {
+    margin-top: 93px;
+  }
 }
 
 .about-project__line-week {
-  margin-top: 110px;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
   padding: 9px 0;
+  margin: 0;
 }
 
 .about-project__line-week_color_green {

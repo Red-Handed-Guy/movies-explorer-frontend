@@ -6,6 +6,8 @@ import Footer from '../Footer/Footer'
 import Movies from '../Movies/Movies'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
+import NotFound from '../NotFound/NotFound'
+import Profile from '../Profile/Profile'
 
 const mainPage = (
   <>
@@ -29,6 +31,13 @@ const savedMoviesPage = (
   </>
 )
 
+const profilePage = (
+  <>
+    <Header />
+    <Profile />
+  </>
+)
+
 function App() {
   return (
     <div className="body">
@@ -39,10 +48,11 @@ function App() {
           <Route path="/saved-movies" element={savedMoviesPage} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/profile" element={profilePage} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
   )
 }
-
 export default App

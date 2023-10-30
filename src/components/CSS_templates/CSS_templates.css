@@ -20,3 +20,17 @@
 .button:hover {
   opacity: 0.8;
 }
+
+.blue-button {
+  width: 100%;
+  border-radius: 3px;
+  background-color: #4285f4;
+  border: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #fff;
+  box-sizing: border-box;
+  padding: 13px 0 15px 0;
+}

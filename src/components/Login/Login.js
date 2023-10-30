@@ -7,7 +7,9 @@ import headerLogo from '../../img/header/logo.svg'
 export default function Login() {
   return (
     <main className="main auth">
-      <Link className="auth__logo-link button" to='/'><img src={headerLogo} alt="Логотип сайта в виде зеленого бублика" className="auth__logo" /></Link>
+      <Link className="auth__logo-link button" to="/">
+        <img src={headerLogo} alt="Логотип сайта в виде зеленого бублика" className="auth__logo" />
+      </Link>
       <h1 className="auth__title">Рады видеть!</h1>
       <form name="login" className="auth__form">
         <ul className="auth__input-list">
@@ -22,10 +24,16 @@ export default function Login() {
             <p className="auth__input-err"></p>
           </li>
         </ul>
-        <button className="button auth__submit-button auth__submit-button_type_login">Войти</button>
+        <button className="button blue-button auth__submit-button auth__submit-button_type_login">
+          Войти
+        </button>
       </form>
-      <p className="auth__subtitle">Ещё не зарегистрированы? 
-        <Link className="auth__link link" to="/signup"> Регистрация</Link>
+      <p className="auth__subtitle">
+        Ещё не зарегистрированы?
+        <Link className="auth__link link" to="/signup">
+          {' '}
+          Регистрация
+        </Link>
       </p>
     </main>
   )

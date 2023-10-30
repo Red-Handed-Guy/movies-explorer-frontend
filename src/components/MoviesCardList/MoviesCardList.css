@@ -30,3 +30,9 @@
   padding: 11px 0 9px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .movies-list__button {
+    margin-top: 102px;
+  }
+}

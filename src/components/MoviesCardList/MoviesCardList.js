@@ -5,6 +5,9 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 export default function MoviesCardList() {
   const [movies, setMovies] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8])
   const location = useLocation()
+
+  console.log(window.history.state)
+  console.log(location.state)
   function addCards() {
     let newMovies = []
     for (let i = 1; i < 10; i++) {
@@ -26,12 +29,10 @@ export default function MoviesCardList() {
           )
         })}
       </div>
-      {location.pathname === '/signin' ? (
+      {location.pathname === '/movies' && (
         <button onClick={addCards} className="movies-list__button button">
           Ещё
         </button>
-      ) : (
-        ''
       )}
     </section>
   )

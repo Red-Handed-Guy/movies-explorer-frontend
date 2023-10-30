@@ -2,3 +2,9 @@
   box-sizing: border-box;
   padding: 80px 70px;
 }
+
+@media (max-width: 768px) {
+  .movies {
+    padding: 80px 30px;
+  }
+}
