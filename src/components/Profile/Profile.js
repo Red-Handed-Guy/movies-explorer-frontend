@@ -40,47 +40,49 @@ export default function Profile() {
 
   return (
     <main className="main profile">
-      <h1 className="profile__title">Привет, {user.name}!</h1>
-      <form onSubmit={submitForm} className="profile__form">
-        <ul className="profile__info">
-          <li className="profile__item">
-            <p className="profile__item-text">Имя</p>
-            {isEditing ? (
-              <input
-                onInput={handleChangeName}
-                className="profile__input"
-                type="text"
-                value={name}
-              />
-            ) : (
-              <p className="profile__item-text">{user.name}</p>
-            )}
-          </li>
-          <li className="profile__item">
-            <p className="profile__item-text">Почта</p>
-            {isEditing ? (
-              <input
-                onInput={handleChangeEmail}
-                className="profile__input"
-                type="email"
-                value={email}
-              />
-            ) : (
-              <p className="profile__item-text">{user.email}</p>
-            )}
-          </li>
-        </ul>
-        {isEditing && (
-          <>
-            <p className="profile__form-err"></p>
-            <button type="submit" className="profile__submit-button blue-button button">
-              Сохранить
-            </button>
-          </>
-        )}
-      </form>
+      <div className='profile__wrapper'>
+        <h1 className="profile__title">Привет, {user.name}!</h1>
+        <form onSubmit={submitForm} className="profile__form">
+          <ul className="profile__info">
+            <li className="profile__item">
+              <p className="profile__item-text">Имя</p>
+              {isEditing ? (
+                <input
+                  onInput={handleChangeName}
+                  className="profile__input"
+                  type="text"
+                  value={name}
+                />
+              ) : (
+                <p className="profile__item-text">{user.name}</p>
+              )}
+            </li>
+            <li className="profile__item">
+              <p className="profile__item-text">E-mail</p>
+              {isEditing ? (
+                <input
+                  onInput={handleChangeEmail}
+                  className="profile__input"
+                  type="email"
+                  value={email}
+                />
+              ) : (
+                <p className="profile__item-text">{user.email}</p>
+              )}
+            </li>
+          </ul>
+          {isEditing && (
+            <div className="profile__submit-button-wrapper">
+              <p className="profile__form-err">Lorem ipsum dolor sit amet.</p>
+              <button type="submit" className="profile__submit-button blue-button button">
+                Сохранить
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
       {!isEditing && (
-        <div className="profile__button-wrapper">
+        <div className="profile__buttons-wrapper">
           <button type="button" onClick={handleEdit} className="profile__button link">
             Редактировать
           </button>

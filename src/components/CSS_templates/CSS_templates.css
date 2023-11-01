@@ -9,6 +9,14 @@
   margin: 0;
 }
 
+@media (max-width: 500px) {
+  .section-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding-bottom: 28px;
+  }
+}
+
 .link:hover {
   opacity: 0.7;
 }
@@ -33,4 +41,11 @@
   color: #fff;
   box-sizing: border-box;
   padding: 13px 0 15px 0;
+}
+
+@media (max-width: 500px) {
+  .blue-button {
+    font-size: 12px;
+    padding: 14px 0 16px 0;
+  }
 }

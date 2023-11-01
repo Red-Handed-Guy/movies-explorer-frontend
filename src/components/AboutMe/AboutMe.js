@@ -5,7 +5,7 @@ export default function AboutMe() {
   return (
     <section className="about-me" id="about-me">
       <h2 className="about-me__title section-title">Студент</h2>
-      <div className="about-me__content-wrapper">
+      <div className="about-me__columns">
         <div className="about-me__column">
           <h3 className="about-me__column-title">Кирилл</h3>
           <p className="about-me__column-subtitle">Фронтенд-разработчик, 30 лет</p>

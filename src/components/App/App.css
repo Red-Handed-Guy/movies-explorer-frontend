@@ -1,14 +1,14 @@
 .body {
   background-color: #202020;
   min-height: 100vh;
-  color: #FFF;
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 .page {
+  position: relative;
   display: flex;
   max-width: 1280px;
   width: 100%;

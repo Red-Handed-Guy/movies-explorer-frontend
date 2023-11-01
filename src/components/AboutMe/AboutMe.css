@@ -5,14 +5,45 @@
 
 @media (max-width: 768px) {
   .about-me {
-    padding: 90px 50px 90px;
+    padding: 90px 50px;
   }
 }
 
-.about-me__content-wrapper {
+@media (max-width: 500px) {
+  .about-me {
+    padding: 70px 14px;
+  }
+}
+
+.about-me__columns {
   margin-top: 66px;
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .about-me__columns {
+    align-items: center;
+    flex-direction: column-reverse;
+    row-gap: 40px;
+  }
+}
+
+.about-me__column {
+  max-width: 600px;
+}
+
+@media (max-width: 1060px) {
+  .about-me__column {
+    max-width: 100%;
+    padding-right: 49px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-me__column {
+    padding: 0;
+  }
 }
 
 .about-me__avatar {
@@ -30,14 +61,17 @@
   }
 }
 
-.about-me__column {
-  max-width: 600px;
+@media (max-width: 600px) {
+  .about-me__avatar {
+    width: 100%;
+    height: auto;
+  }
 }
 
-@media (max-width: 1060px) {
-  .about-me__column {
-    max-width: 100%;
-    padding-right: 49px;
+@media (max-width: 320px) {
+  .about-me__avatar {
+    width: 100%;
+    aspect-ratio: 292/352;
   }
 }
 
@@ -58,6 +92,14 @@
   }
 }
 
+@media (max-width: 500px) {
+  .about-me__column-title {
+    font-size: 30px;
+    letter-spacing: -1.2px;
+    line-height: normal;
+  }
+}
+
 .about-me__column-subtitle {
   font-size: 18px;
   font-style: normal;
@@ -73,10 +115,19 @@
   }
 }
 
+@media (max-width: 500px) {
+  .about-me__column-subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 20px 0 0 0;
+  }
+}
+
 .about-me__column-text {
   margin: 0;
   font-size: 14px;
   font-style: normal;
+  font-weight: 400;
   line-height: 22px;
   margin: 26px 0 0 0;
 }
@@ -85,6 +136,14 @@
   .about-me__column-text {
     font-size: 12px;
     line-height: 18px;
+    margin: 20px 0 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-me__column-text {
+    font-size: 11px;
+    line-height: 16px;
     margin: 20px 0 0 0;
   }
 }
@@ -106,6 +165,12 @@
   }
 }
 
+@media (max-width: 500px) {
+  .about-me__column-git {
+    margin: 40px 0 0 0;
+  }
+}
+
 .about-me__portfolio {
   margin-top: 100px;
 }
@@ -113,5 +178,11 @@
 @media (max-width: 768px) {
   .about-me__portfolio {
     margin-top: 90px;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-me__portfolio {
+    margin-top: 70px;
   }
 }

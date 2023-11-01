@@ -1,15 +1,25 @@
 .header {
+  position: sticky;
+  background-color: #202020;
+  top: 0;
   min-height: 74px;
   box-sizing: border-box;
   padding: 0 70px;
   display: flex;
   align-items: center;
   width: 100%;
+  z-index: 4;
 }
 
 @media (max-width: 768px) {
   .header {
     padding: 0 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .header {
+    padding: 0 14px;
   }
 }
 
@@ -37,6 +47,7 @@
   list-style: none;
   font-size: 13px;
   column-gap: 16px;
+  font-style: normal;
   font-weight: 400;
   line-height: 18px;
   margin: 0;
@@ -45,11 +56,26 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 500px) {
+  .header__list {
+    padding: 0;
+  }
+}
+
 .header__list_type_authorization {
   font-size: 12px;
   line-height: 16px;
   column-gap: 30px;
   font-weight: 500;
+}
+
+@media (max-width: 500px) {
+  .header__list_type_authorization {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    column-gap: 14px;
+  }
 }
 
 .header__list-link {
@@ -68,6 +94,12 @@
   color: #000;
 }
 
+@media (max-width: 500px) {
+  .header__list-link_type_login {
+    padding: 7px 12px;
+  }
+}
+
 .header__user {
   display: inline-block;
   color: #fff;
@@ -78,4 +110,29 @@
   border-radius: 20px;
   background: #313131;
   font-weight: 500;
+}
+
+.header__aside-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.header__burger {
+  background-image: url(../../img/header/Burger.svg);
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 48px;
+  background-color: transparent;
+  background-size: contain;
+  border: none;
+  padding: 0;
+  background-position: center;
+}
+
+@media (max-width: 500px) {
+  .header__burger {
+    width: 40px;
+    height: 42px;
+  }
 }

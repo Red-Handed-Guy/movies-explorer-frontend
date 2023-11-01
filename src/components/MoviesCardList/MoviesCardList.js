@@ -6,17 +6,13 @@ export default function MoviesCardList() {
   const [movies, setMovies] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8])
   const location = useLocation()
 
-  console.log(window.history.state)
-  console.log(location.state)
   function addCards() {
     let newMovies = []
     for (let i = 1; i < 10; i++) {
       newMovies.push(movies.at(-1) + i)
     }
-    console.log(newMovies)
     setMovies([...movies, ...newMovies])
   }
-
   return (
     <section className="movies-list" aria-label="Список фильмов">
       <div className="movies-list__cards">

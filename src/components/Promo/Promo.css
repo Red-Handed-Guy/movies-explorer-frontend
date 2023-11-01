@@ -10,6 +10,12 @@
   }
 }
 
+@media (max-width: 500px) {
+  .promo {
+    padding: 14px 14px 0;
+  }
+}
+
 .promo__banner {
   box-sizing: border-box;
   border-radius: 10px;
@@ -24,6 +30,13 @@
 @media (max-width: 768px) {
   .promo__banner {
     padding-top: 350px;
+  }
+}
+
+@media (max-width: 500px) {
+  .promo__banner {
+    padding-top: 220px;
+    padding-bottom: 17px;
   }
 }
 
@@ -46,6 +59,15 @@
   }
 }
 
+@media (max-width: 500px) {
+  .promo__banner-title {
+    font-size: 29px;
+    line-height: 37px;
+    letter-spacing: -1.16px;
+    padding: 0;
+  }
+}
+
 .promo__nav-tab {
   margin-top: 151px;
 }
@@ -53,5 +75,11 @@
 @media (max-width: 768px) {
   .promo__nav-tab {
     margin-top: 314px;
+  }
+}
+
+@media (max-width: 500px) {
+  .promo__nav-tab {
+    margin-top: 212px;
   }
 }
