@@ -14,7 +14,7 @@ export default function Footer() {
               Яндекс.Практикум
             </a>
           </li>
-          <li className="footer__link">
+          <li className="footer__item">
             <a
               target="_blank"
               rel="noreferrer"

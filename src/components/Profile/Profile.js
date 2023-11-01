@@ -40,7 +40,7 @@ export default function Profile() {
 
   return (
     <main className="main profile">
-      <div className='profile__wrapper'>
+      <div className="profile__wrapper">
         <h1 className="profile__title">Привет, {user.name}!</h1>
         <form onSubmit={submitForm} className="profile__form">
           <ul className="profile__info">
@@ -48,9 +48,12 @@ export default function Profile() {
               <p className="profile__item-text">Имя</p>
               {isEditing ? (
                 <input
+                  minLength={2}
+                  maxLength={30}
                   onInput={handleChangeName}
                   className="profile__input"
                   type="text"
+                  placeholder="Имя"
                   value={name}
                 />
               ) : (
@@ -64,6 +67,7 @@ export default function Profile() {
                   onInput={handleChangeEmail}
                   className="profile__input"
                   type="email"
+                  placeholder="E-mail"
                   value={email}
                 />
               ) : (

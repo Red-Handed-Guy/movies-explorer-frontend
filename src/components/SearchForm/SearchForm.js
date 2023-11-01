@@ -2,7 +2,7 @@ export default function SearchForm() {
   return (
     <form className="movies__search-form search-form">
       <div className="search-form__input-wrapper">
-        <input className="search-form__input" type="text" name="movies" placeholder="Фильм" id="" />
+        <input className="search-form__input" type="text" required name="movies" placeholder="Фильм" />
         <button type="submit" className="search-form__submit button"></button>
       </div>
       <div className="search-form__switch-wrapper">

@@ -1,11 +1,13 @@
-.nav-tab {
+.nav-tab__list {
   display: flex;
   list-style: none;
   column-gap: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 500px) {
-  .nav-tab {
+  .nav-tab__list {
     column-gap: 6px;
   }
 }

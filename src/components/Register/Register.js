@@ -15,17 +15,17 @@ export default function Register() {
         <ul className="auth__input-list">
           <li className="auth__input-item">
             <p className="auth__input-name">Имя</p>
-            <input type="text" className="auth__input" />
+            <input type="text" minLength={2} maxLength={30} required placeholder='Имя' className="auth__input" />
             <p className="auth__input-err"></p>
           </li>
           <li className="auth__input-item">
             <p className="auth__input-name">E-mail</p>
-            <input type="email" className="auth__input" />
+            <input type="email" required placeholder='E-mail' className="auth__input" />
             <p className="auth__input-err"></p>
           </li>
           <li className="auth__input-item">
             <p className="auth__input-name">Пароль</p>
-            <input type="password" className="auth__input" />
+            <input type="password" minLength={2} maxLength={30} required placeholder='Пароль' className="auth__input" />
             <p className="auth__input-err"></p>
           </li>
         </ul>

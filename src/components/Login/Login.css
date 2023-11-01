@@ -85,6 +85,14 @@
   box-sizing: border-box;
 }
 
+.auth__input::placeholder {
+  color: #8b8b8b;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
 .auth__input:focus {
   outline: none;
   border: 1px solid #3ddc84;

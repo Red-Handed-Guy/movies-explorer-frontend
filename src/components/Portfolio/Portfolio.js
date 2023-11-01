@@ -8,7 +8,7 @@ export default function Portfolio() {
             className="portfolio__link link"
             target="_blank"
             rel="noreferrer"
-            href="https://storage.googleapis.com/pai-images/7dfe00208dc14a3fa4176d2aad23056c.jpeg">
+            href="https://red-handed-guy.github.io/how-to-learn/">
             <p className="portfolio__link-text">Статичный сайт</p>
             <p className="portfolio__link-text">&#8599;</p>
           </a>
@@ -18,7 +18,7 @@ export default function Portfolio() {
             className="portfolio__link link"
             target="_blank"
             rel="noreferrer"
-            href="https://storage.googleapis.com/pai-images/7dfe00208dc14a3fa4176d2aad23056c.jpeg">
+            href="https://red-handed-guy.github.io/russian-travel/">
             <p className="portfolio__link-text">Адаптивный сайт</p>
             <p className="portfolio__link-text">&#8599;</p>
           </a>
@@ -28,7 +28,7 @@ export default function Portfolio() {
             className="portfolio__link link"
             target="_blank"
             rel="noreferrer"
-            href="https://storage.googleapis.com/pai-images/7dfe00208dc14a3fa4176d2aad23056c.jpeg">
+            href="https://red.nomoredomainsrocks.ru/">
             <p className="portfolio__link-text">Одностраничное приложение</p>
             <p className="portfolio__link-text">&#8599;</p>
           </a>
