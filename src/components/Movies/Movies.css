@@ -1,0 +1,18 @@
+.movies {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 80px 70px;
+}
+
+@media (max-width: 910px) {
+  .movies {
+    padding: 80px 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .movies {
+    padding: 80px 10px;
+  }
+}

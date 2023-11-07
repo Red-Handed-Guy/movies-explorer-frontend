@@ -1,0 +1,21 @@
+.body {
+  background-color: #202020;
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page {
+  position: relative;
+  display: flex;
+  max-width: 1280px;
+  width: 100%;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}

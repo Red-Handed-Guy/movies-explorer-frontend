@@ -1,0 +1,131 @@
+.movie-card {
+  max-width: 360px;
+  max-height: 201px;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 910px) {
+  .movie-card {
+    max-width: 339px;
+    max-height: 190px;
+  }
+}
+
+@media (max-width: 500px) {
+  .movie-card {
+    max-width: 100%;
+    max-height: initial;
+    aspect-ratio: 339/190;
+  }
+}
+
+.movie-card__img {
+  width: 100%;
+  aspect-ratio: 360/201;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+.movie-card__information {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  column-gap: 30px;
+  box-sizing: border-box;
+  padding: 12px 14px 0;
+}
+
+@media (max-width: 910px) {
+  .movie-card__information {
+    padding: 22px 0 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .movie-card__information {
+    padding: 12px 0 0 0;
+  }
+}
+
+.movie-card__title {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+@media (max-width: 500px) {
+  .movie-card__title {
+    font-size: 12px;
+  }
+}
+
+.movie-card__duration {
+  white-space: nowrap;
+  padding: 0 9px;
+  margin: 0;
+  color: #8b8b8b;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  background-color: #2f2f2f;
+  border-radius: 3px;
+  max-height: 18px;
+}
+
+.movie-card__button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.4s;
+}
+
+.movie-card__button_type_save {
+  background-color: #313131;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 9px;
+  border-radius: 30px;
+  padding: 6px 7px;
+  width: 72px;
+  transition: all 0.4s;
+  overflow: hidden;
+}
+
+.movie-card__button_type_del {
+  background-color: transparent;
+  transition: all 0.4s;
+  height: 21px;
+  width: 21px;
+  background-image: url(../../img/movies/delete-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.movie-card:hover .movie-card__button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.movie-card__button_added {
+  opacity: 1;
+  background-color: #ee3465;
+  width: 21px;
+  transition: all 0.4s;
+  visibility: visible;
+}
