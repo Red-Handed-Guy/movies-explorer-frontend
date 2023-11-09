@@ -2,22 +2,12 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import headerLogo from '../../img/header/logo.svg'
 import Navigation from '../Navigation/Navigation'
+import { CurrentUserContext } from '../Context/Context'
 
-const isLoggedin = true
 
-export default function Header() {
-  const [windowWidth, setWindowWidth] = React.useState(document.documentElement.clientWidth)
+export default function Header({windowWidth, isLoggedIn}) {
+  const currentUser = React.useContext(CurrentUserContext)
   const [asideNav, setAsideNav] = React.useState(false)
-
-  React.useEffect(() => {
-    function handleWindowResize() {
-      setWindowWidth(document.documentElement.clientWidth)
-    }
-    window.addEventListener('resize', handleWindowResize)
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
 
   React.useEffect(() => {
     if (windowWidth > 768) {
@@ -39,7 +29,7 @@ export default function Header() {
         <Link className="header__logo-link button" to="/">
           <img className="header__logo" src={headerLogo} alt="Логотип приложения" />
         </Link>
-        {isLoggedin && checkWindowWidth() && (
+        {isLoggedIn && checkWindowWidth() && (
           <ul className="header__list">
             <li className="header__list-item">
               <NavLink
@@ -61,7 +51,7 @@ export default function Header() {
             </li>
           </ul>
         )}
-        {!isLoggedin && (
+        {!isLoggedIn && (
           <ul className="header__list header__list_type_authorization">
             <li className="header__list-item">
               <Link className="header__list-link link" to="/signup">
@@ -75,12 +65,12 @@ export default function Header() {
             </li>
           </ul>
         )}
-        {isLoggedin && checkWindowWidth() && (
+        {isLoggedIn && checkWindowWidth() && (
           <Link className="header__user button" to="/profile">
-            Аккаунт
+            {currentUser.email}
           </Link>
         )}
-        {!checkWindowWidth() && isLoggedin && (
+        {!checkWindowWidth() && isLoggedIn && (
           <button onClick={openAsideNav} type="button" className="header__burger button"></button>
         )}
       </nav>

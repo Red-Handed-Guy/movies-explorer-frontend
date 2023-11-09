@@ -6,13 +6,13 @@ import MoviesNotFound from '../MoviesNotFound/MoviesNotFound'
 const loader = false
 const foundMovies = false
 
-export default function Movies() {
+export default function Movies({ movies }) {
   return (
     <main className="main movies">
       <SearchForm />
       {foundMovies ? <MoviesNotFound /> : ''}
       {loader ? <Preloader /> : ''}
-      <MoviesCardList />
+      <MoviesCardList movies={movies} />
     </main>
   )
 }

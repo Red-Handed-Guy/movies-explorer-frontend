@@ -113,23 +113,42 @@
   line-height: normal;
 }
 
-.auth__submit-button_type_login {
-  margin-top: 159px;
+.auth__submit-button {
+  margin-top: 5px;
+}
+
+.auth__submit-err {
+  text-align: center;
+  margin: 0;
+  min-height: 12px;
+  color: #ee3465;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.auth__submit-err_ok {
+  color: #3ddc84;
+}
+
+.auth__submit-err_type_reg {
+  margin-top: 54px;
 }
 
 @media (max-width: 500px) {
-  .auth__submit-button_type_login {
-    margin-top: 247px;
+  .auth__submit-err_type_reg {
+    margin-top: 142px;
   }
 }
 
-.auth__submit-button_type_reg {
-  margin-top: 71px;
+.auth__submit-err_type_login {
+  margin-top: 142px;
 }
 
 @media (max-width: 500px) {
-  .auth__submit-button_type_reg {
-    margin-top: 159px;
+  .auth__submit-err_type_login {
+    margin-top: 230px;
   }
 }
 
