@@ -8,7 +8,6 @@ import Login from '../Login/Login'
 import Register from '../Register/Register'
 import NotFound from '../NotFound/NotFound'
 import Profile from '../Profile/Profile'
-import { getMovies } from '../../utils/MoviesApi'
 
 import {
   ProtectedRouteElementNotLoggedIn,
@@ -23,7 +22,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
   const [currentUser, setCurrentUser] = React.useState({})
-  const [movies, setMovies] = React.useState([])
 
   React.useEffect(() => {
     setIsLoading(true)
@@ -39,22 +37,15 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    if (isLoggedIn) {
-      getMovies()
-        .then((res) => {
-          setMovies(res)
-        })
-        .catch(console.log)
+    function handleWindowResizeTimeout() {
+      setTimeout(() => {
+        setWindowWidth(document.documentElement.clientWidth)
+      }, '500')
     }
-  }, [isLoggedIn])
 
-  React.useEffect(() => {
-    function handleWindowResize() {
-      setWindowWidth(document.documentElement.clientWidth)
-    }
-    window.addEventListener('resize', handleWindowResize)
+    window.addEventListener('resize', handleWindowResizeTimeout)
     return () => {
-      window.removeEventListener('resize', handleWindowResize)
+      window.removeEventListener('resize', handleWindowResizeTimeout)
     }
   }, [])
 
@@ -67,7 +58,7 @@ function App() {
       setIsLoading={setIsLoading}
     />
   )
-  const moviesComponent = <Movies movies={movies} />
+  const moviesComponent = <Movies windowWidth={windowWidth} />
 
   const mainPage = (
     <>
@@ -103,54 +94,68 @@ function App() {
       <div className="body">
         <div className="page">
           <Routes>
-            <Route path="/" element={mainPage} />
             {!isLoading && (
-              <Route
-                path="/movies"
-                element={
-                  <ProtectedRouteElementNotLoggedIn element={moviesPage} isLoggedIn={isLoggedIn} />
-                }
-              />
-            )}
-            {!isLoading && (
-              <Route
-                path="/saved-movies"
-                element={
-                  <ProtectedRouteElementNotLoggedIn
-                    element={savedMoviesPage}
-                    isLoggedIn={isLoggedIn}
+              <>
+                <Route path="/" element={mainPage} />
+                {
+                  <Route
+                    path="/movies"
+                    element={
+                      <ProtectedRouteElementNotLoggedIn
+                        element={moviesPage}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
                   />
                 }
-              />
-            )}
-            {!isLoading && (
-              <Route
-                path="/signin"
-                element={
-                  <ProtectedRouteElementIsLoggedIn
-                    element={loginComponent}
-                    isLoggedIn={isLoggedIn}
+                {
+                  <Route
+                    path="/saved-movies"
+                    element={
+                      <ProtectedRouteElementNotLoggedIn
+                        element={savedMoviesPage}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
                   />
                 }
-              />
-            )}
-            {!isLoading && (
-              <Route
-                path="/signup"
-                element={
-                  <ProtectedRouteElementIsLoggedIn element={<Register />} isLoggedIn={isLoggedIn} />
+                {
+                  <Route
+                    path="/signin"
+                    element={
+                      <ProtectedRouteElementIsLoggedIn
+                        element={loginComponent}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />
                 }
-              />
-            )}
-            {!isLoading && (
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRouteElementNotLoggedIn element={profilePage} isLoggedIn={isLoggedIn} />
+                {
+                  <Route
+                    path="/signup"
+                    element={
+                      <ProtectedRouteElementIsLoggedIn
+                        element={<Register />}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />
                 }
-              />
+                {
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRouteElementNotLoggedIn
+                        element={profilePage}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />
+                }
+                {<Route path="*" element={<NotFound />} />}
+              </>
             )}
-            {!isLoading && <Route path="*" element={<NotFound />} />}
+
             {isLoading && <Route path="*" element={<></>} />}
           </Routes>
         </div>

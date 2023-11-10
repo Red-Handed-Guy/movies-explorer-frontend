@@ -1,20 +1,72 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+//import { useLocation } from 'react-router-dom'
 import MoviesCard from '../MoviesCard/MoviesCard'
 
-export default function MoviesCardList({ movies }) {
-  let savedMovies = movies
-  const location = useLocation()
+export default function MoviesCardList({
+  windowWidth,
+  foundMovies,
+  setShowedMovies,
+  showedMovies,
+  handleSaveMovie,
+  savedMovies,
+}) {
+  const [filmsMultiplier, setFilmsMultiplier] = React.useState(3)
+
+  React.useEffect(() => {
+    if (1000 < windowWidth) {
+      setShowedMovies(foundMovies.slice(0, 12))
+      setFilmsMultiplier(3)
+    }
+    if (500 < windowWidth && windowWidth <= 1000) {
+      setShowedMovies(foundMovies.slice(0, 8))
+      setFilmsMultiplier(2)
+    }
+
+    if (windowWidth <= 500) {
+      setShowedMovies(foundMovies.slice(0, 5))
+      setFilmsMultiplier(2)
+    }
+  }, [foundMovies, setShowedMovies, windowWidth])
+
+  function getMoreMovies() {
+    setShowedMovies([
+      ...showedMovies,
+      ...foundMovies.slice(showedMovies.length, showedMovies.length + filmsMultiplier),
+    ])
+    console.log()
+  }
 
   return (
     <section className="movies-list" aria-label="Список фильмов">
       <div className="movies-list__cards">
-        {movies.map((movieData) => {
-          return <MoviesCard key={movieData.id} movieData={movieData} />
+        {showedMovies.map((movieData) => {
+          let savedId
+          savedMovies.forEach((savedMovie) => {
+            if (savedMovie.movieId === movieData.id) {
+              savedId = savedMovie._id
+            }
+          })
+          return (
+            <MoviesCard
+              key={movieData.id}
+              movieData={movieData}
+              handleSaveMovie={handleSaveMovie}
+              savedId={savedId}
+            />
+          )
+          // return (
+          //   <MoviesCard
+          //     key={movieData.id}
+          //     movieData={movieData}
+          //     handleSaveMovie={handleSaveMovie}
+          //   />
+          // )
         })}
       </div>
-      {location.pathname === '/movies' && (
-        <button className="movies-list__button button">Ещё</button>
+      {!(foundMovies.length === showedMovies.length) && (
+        <button onClick={getMoreMovies} className="movies-list__button button">
+          Ещё
+        </button>
       )}
     </section>
   )

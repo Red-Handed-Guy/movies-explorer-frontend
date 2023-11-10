@@ -30,6 +30,7 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
     logout()
       .then(() => {
         setCurrentUser({})
+        localStorage.clear()
         setIsLoggedIn(false)
         navigate('/', { replace: true })
       })
