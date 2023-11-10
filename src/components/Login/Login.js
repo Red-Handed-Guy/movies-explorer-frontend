@@ -1,14 +1,10 @@
 import React from 'react'
-
 import { validate } from 'email-validator'
-
 import { Link, useNavigate } from 'react-router-dom'
-
 import { login } from '../../utils/MainApi'
-
 import headerLogo from '../../img/header/logo.svg'
 
-export default function Login({ setCurrentUser, setIsLoggedIn, setIsLoading }) {
+export default function Login({ setCurrentUser, setIsLoggedIn }) {
   const [password, setPassword] = React.useState('')
   const [passwordErr, setPasswordErr] = React.useState('')
   const [passwordValid, setPasswordValid] = React.useState(false)
@@ -16,10 +12,9 @@ export default function Login({ setCurrentUser, setIsLoggedIn, setIsLoading }) {
   const [emailErr, setEmailErr] = React.useState('')
   const [emailValid, setEmailValid] = React.useState(false)
   const [submitErr, setSubmitErr] = React.useState('')
+  const [isRequestSending, setIsRequestSending] = React.useState(false)
 
   const navigate = useNavigate()
-
-
 
   function handleChangeEmail(e) {
     setEmail(e.target.value)
@@ -46,20 +41,28 @@ export default function Login({ setCurrentUser, setIsLoggedIn, setIsLoading }) {
   //! Кнопка сабмит
   function handleFormSubmit(e) {
     e.preventDefault()
+    setIsRequestSending(true)
     login({ email, password })
       .then((res) => {
+        setSubmitErr('')
         setEmail('')
         setPassword('')
         setIsLoggedIn(true)
         setCurrentUser(res)
-        navigate('/movies')
+        navigate('/movies', { replace: true })
       })
       .catch((err) => {
-        if (err.includes('409')) {
-          setSubmitErr('Пользователь с таким E-mail уже существует')
+        if (err.includes('401')) {
+          setSubmitErr('Введены неверный логин или пароль')
         } else {
           setSubmitErr('Что-то пошло не так')
         }
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
+      .finally(() => {
+        setIsRequestSending(false)
       })
   }
 
@@ -100,10 +103,10 @@ export default function Login({ setCurrentUser, setIsLoggedIn, setIsLoading }) {
         </ul>
         <p className={`auth__submit-err auth__submit-err_type_reg`}>{submitErr}</p>
         <button
-          disabled={submitButtonStatus ? '' : true}
+          disabled={submitButtonStatus && !isRequestSending ? '' : true}
           type="submit"
           className={`button blue-button auth__submit-button ${
-            submitButtonStatus ? '' : 'blue-button_disabled'
+            submitButtonStatus && !isRequestSending ? '' : 'blue-button_disabled'
           }`}>
           Войти
         </button>

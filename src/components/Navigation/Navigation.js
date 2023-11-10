@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { CurrentUserContext } from '../Context/Context'
 
 export default function Navigation({ asideNav, setAsideNav }) {
-  const currentUser = React.useContext(CurrentUserContext)
   function closeAsideNav() {
     setAsideNav(false)
   }
@@ -45,7 +43,7 @@ export default function Navigation({ asideNav, setAsideNav }) {
           </li>
         </ul>
         <Link className="navigation__user button" to="/profile" onClick={closeAsideNav}>
-          {currentUser.email}
+          Аккаунт
         </Link>
       </div>
     </nav>

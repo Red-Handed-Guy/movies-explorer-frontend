@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validate } from 'email-validator'
-
 import { regName } from '../../tools/Const'
 import { CurrentUserContext } from '../Context/Context'
 import { logout, patchUser } from '../../utils/MainApi'
@@ -19,6 +18,11 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
 
   const [submitErr, setSubmitErr] = React.useState('')
   const [isEditing, setIsEditing] = React.useState(false)
+
+  const [isEditingErrOk, setIsEditinErrOk] = React.useState(false)
+
+  const [isRequestSending, setIsRequestSending] = React.useState(false)
+
   const navigate = useNavigate()
 
   React.useEffect(() => {
@@ -34,7 +38,13 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
         setIsLoggedIn(false)
         navigate('/', { replace: true })
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setSubmitErr('Что-то пошло не так')
+        console.log(err)
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
   }
 
   function handleEdit() {
@@ -75,12 +85,23 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
 
   function submitForm(e) {
     e.preventDefault()
+    if (name === currentUser.name && email === currentUser.email) {
+      setSubmitErr('')
+      setIsEditing(false)
+      return
+    }
+
+    setIsRequestSending(true)
     patchUser({ name, email })
       .then((res) => {
         setCurrentUser(res)
-        setSubmitErr('')
+        setSubmitErr('Изменения прошли успешно!')
+        setIsEditinErrOk(true)
         setIsEditing(false)
-        
+        setTimeout(() => {
+          setSubmitErr('')
+          setIsEditinErrOk(false)
+        }, 3000)
       })
       .catch((err) => {
         if (err.includes('409')) {
@@ -88,10 +109,17 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
         } else {
           setSubmitErr('Что-то пошло не так')
         }
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
+      .finally(() => {
+        setIsRequestSending(false)
       })
   }
 
   const submitButtonStatus = nameValid && emailValid
+  const dataIsEqual = currentUser.name === name && currentUser.email === email
 
   return (
     <main className="main profile">
@@ -131,20 +159,23 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
                 <p className="profile__item-text">{currentUser.email}</p>
               )}
             </li>
+            <p className={`profile__form-err ${isEditingErrOk ? 'profile__form-err_color' : ''}`}>
+              {submitErr}
+              <>{nameErr}</>
+              <br />
+              <>{emailErr}</>
+            </p>
           </ul>
+
           {isEditing && (
             <div className="profile__submit-button-wrapper">
-              <p className="profile__form-err">
-                {submitErr}
-                <>{nameErr}</>
-                <br />
-                <>{emailErr}</>
-              </p>
               <button
-                disabled={submitButtonStatus ? '' : true}
+                disabled={submitButtonStatus && !isRequestSending && !dataIsEqual ? '' : true}
                 type="submit"
                 className={`button blue-button profile__submit-button ${
-                  submitButtonStatus ? '' : 'blue-button_disabled'
+                  submitButtonStatus && !isRequestSending && !dataIsEqual
+                    ? ''
+                    : 'blue-button_disabled'
                 }`}>
                 Сохранить
               </button>

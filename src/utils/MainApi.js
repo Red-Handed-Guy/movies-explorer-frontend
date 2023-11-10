@@ -104,3 +104,12 @@ export const getSavedMovies = () => {
     return getResponseData(res)
   })
 }
+
+export const deleteMovie = (id) => {
+  return fetch(`${BASE_URL}/movies/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  }).then((res) => {
+    return getResponseData(res)
+  })
+}

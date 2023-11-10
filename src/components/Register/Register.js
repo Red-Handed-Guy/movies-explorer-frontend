@@ -1,22 +1,25 @@
 import React from 'react'
 import { validate } from 'email-validator'
 import { Link, useNavigate } from 'react-router-dom'
-
-import { register } from '../../utils/MainApi'
+import { register, login } from '../../utils/MainApi'
 import { regName } from '../../tools/Const'
 import headerLogo from '../../img/header/logo.svg'
 
-export default function Register() {
+export default function Register({ setIsLoggedIn, setCurrentUser }) {
   const [name, setName] = React.useState('')
   const [nameErr, setNameErr] = React.useState('')
   const [nameValid, setNameValid] = React.useState(false)
+
   const [password, setPassword] = React.useState('')
   const [passwordErr, setPasswordErr] = React.useState('')
   const [passwordValid, setPasswordValid] = React.useState(false)
+
   const [email, setEmail] = React.useState('')
   const [emailErr, setEmailErr] = React.useState('')
   const [emailValid, setEmailValid] = React.useState(false)
+  
   const [isSubmitOk, setIsSubmitOk] = React.useState(false)
+  const [isRequestSending, setIsRequestSending] = React.useState(false)
   const [submitErr, setSubmitErr] = React.useState('')
 
   const navigate = useNavigate()
@@ -65,16 +68,20 @@ export default function Register() {
   //! Кнопка сабмит
   function handleFormSubmit(e) {
     e.preventDefault()
+    setIsRequestSending(true)
     register({ email, name, password })
       .then(() => {
         setIsSubmitOk(true)
-        setSubmitErr(
-          'Вы успешно зарегестрировались! Сейчас вы будете перенаправлены на страницу авторизации.'
-        )
-        setName('')
-        setEmail('')
-        setPassword('')
-        setTimeout(() => navigate('/signin'), 3000)
+        setSubmitErr('Вы успешно зарегестрировались! Сейчас вы будете автоматически авторизованы.')
+        login({ email, password }).then((res) => {
+          setSubmitErr('')
+          setName('')
+          setEmail('')
+          setPassword('')
+          setIsLoggedIn(true)
+          setCurrentUser(res)
+          navigate('/movies', { replace: true })
+        })
       })
       .catch((err) => {
         setIsSubmitOk(false)
@@ -83,6 +90,12 @@ export default function Register() {
         } else {
           setSubmitErr('Что-то пошло не так')
         }
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
+      .finally(() => {
+        setIsRequestSending(false)
       })
   }
 
@@ -142,10 +155,10 @@ export default function Register() {
           {submitErr}
         </p>
         <button
-          disabled={submitButtonStatus ? '' : true}
+          disabled={submitButtonStatus && !isRequestSending ? '' : true}
           type="submit"
           className={`button blue-button auth__submit-button ${
-            submitButtonStatus ? '' : 'blue-button_disabled'
+            submitButtonStatus && !isRequestSending ? '' : 'blue-button_disabled'
           }`}>
           Зарегистрироваться
         </button>

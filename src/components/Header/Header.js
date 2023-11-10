@@ -2,11 +2,8 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import headerLogo from '../../img/header/logo.svg'
 import Navigation from '../Navigation/Navigation'
-import { CurrentUserContext } from '../Context/Context'
 
-
-export default function Header({windowWidth, isLoggedIn}) {
-  const currentUser = React.useContext(CurrentUserContext)
+export default function Header({ windowWidth, isLoggedIn }) {
   const [asideNav, setAsideNav] = React.useState(false)
 
   React.useEffect(() => {
@@ -67,7 +64,7 @@ export default function Header({windowWidth, isLoggedIn}) {
         )}
         {isLoggedIn && checkWindowWidth() && (
           <Link className="header__user button" to="/profile">
-            {currentUser.email}
+            Аккаунт
           </Link>
         )}
         {!checkWindowWidth() && isLoggedIn && (

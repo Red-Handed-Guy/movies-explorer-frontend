@@ -5,16 +5,21 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import Preloader from '../Preloader/Preloader'
 import MoviesNotFound from '../MoviesNotFound/MoviesNotFound'
 import MoviesCardListSaved from '../MoviesCardList_Saved/MoviesCardListSaved'
-import { getSavedMovies, saveMovie } from '../../utils/MainApi'
+import { getSavedMovies, saveMovie, deleteMovie } from '../../utils/MainApi'
 
 export default function Movies({ windowWidth }) {
   const location = useLocation()
+  const [beatfilmMovies, setBeatfilmMovies] = React.useState([])
 
-  const [showedMovies, setShowedMovies] = React.useState([])
   const [foundMovies, setFoundMovies] = React.useState([])
+  const [showedMovies, setShowedMovies] = React.useState([])
+
   const [savedMovies, setSavedMovies] = React.useState([])
+  const [shownSavedMovies, setShownSavedMovies] = React.useState([])
 
   const [moviesNotFound, setMoviesNotFound] = React.useState(false)
+  const [savedMoviesNotFound, setSavedMoviesNotFound] = React.useState(false)
+
   const [loader, setLoader] = React.useState(false)
 
   const [searchInput, setSearchInput] = React.useState('')
@@ -22,6 +27,12 @@ export default function Movies({ windowWidth }) {
 
   function handleSaveMovie(movieData) {
     saveMovie(movieData).then((res) => setSavedMovies([...savedMovies, res]))
+  }
+
+  function handleDeleteMovie(movieId) {
+    deleteMovie(movieId).then((deletedMovie) =>
+      setSavedMovies((state) => state.filter((movie) => movie._id !== deletedMovie._id))
+    )
   }
 
   React.useEffect(() => {
@@ -41,6 +52,11 @@ export default function Movies({ windowWidth }) {
     setFoundMovies(lastSearch.result)
   }, [])
 
+  React.useEffect(() => {
+    setShownSavedMovies(savedMovies)
+    setSavedMoviesNotFound(false)
+  }, [savedMovies])
+
   return (
     <main className="main movies">
       <SearchForm
@@ -51,8 +67,14 @@ export default function Movies({ windowWidth }) {
         setSearchCheckbox={setSearchCheckbox}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
+        setShownSavedMovies={setShownSavedMovies}
+        savedMovies={savedMovies}
+        setSavedMoviesNotFound={setSavedMoviesNotFound}
+        setBeatfilmMovies={setBeatfilmMovies}
+        beatfilmMovies={beatfilmMovies}
       />
-      {moviesNotFound && <MoviesNotFound />}
+      {moviesNotFound && location.pathname === '/movies' && <MoviesNotFound />}
+      {savedMoviesNotFound && location.pathname === '/saved-movies' && <MoviesNotFound />}
       {loader && <Preloader />}
       {location.pathname === '/movies' && foundMovies.length > 0 && (
         <MoviesCardList
@@ -62,9 +84,15 @@ export default function Movies({ windowWidth }) {
           setShowedMovies={setShowedMovies}
           handleSaveMovie={handleSaveMovie}
           savedMovies={savedMovies}
+          handleDeleteMovie={handleDeleteMovie}
         />
       )}
-      {location.pathname === '/saved-movies' && <MoviesCardListSaved savedMovies={savedMovies} />}
+      {location.pathname === '/saved-movies' && (
+        <MoviesCardListSaved
+          handleDeleteMovie={handleDeleteMovie}
+          shownSavedMovies={shownSavedMovies}
+        />
+      )}
     </main>
   )
 }

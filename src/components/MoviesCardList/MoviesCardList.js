@@ -1,5 +1,4 @@
 import React from 'react'
-//import { useLocation } from 'react-router-dom'
 import MoviesCard from '../MoviesCard/MoviesCard'
 
 export default function MoviesCardList({
@@ -9,6 +8,7 @@ export default function MoviesCardList({
   showedMovies,
   handleSaveMovie,
   savedMovies,
+  handleDeleteMovie,
 }) {
   const [filmsMultiplier, setFilmsMultiplier] = React.useState(3)
 
@@ -52,15 +52,9 @@ export default function MoviesCardList({
               movieData={movieData}
               handleSaveMovie={handleSaveMovie}
               savedId={savedId}
+              handleDeleteMovie={handleDeleteMovie}
             />
           )
-          // return (
-          //   <MoviesCard
-          //     key={movieData.id}
-          //     movieData={movieData}
-          //     handleSaveMovie={handleSaveMovie}
-          //   />
-          // )
         })}
       </div>
       {!(foundMovies.length === showedMovies.length) && (

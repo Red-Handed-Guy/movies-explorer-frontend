@@ -9,12 +9,8 @@ import Register from '../Register/Register'
 import NotFound from '../NotFound/NotFound'
 import Profile from '../Profile/Profile'
 
-import {
-  ProtectedRouteElementNotLoggedIn,
-  ProtectedRouteElementIsLoggedIn,
-} from '../ProtectedRoute/ProtectedRoute'
+import { ProtectedRouteElementNotLoggedIn } from '../ProtectedRoute/ProtectedRoute'
 import { CurrentUserContext } from '../Context/Context'
-
 import { getUser } from '../../utils/MainApi'
 
 function App() {
@@ -51,12 +47,9 @@ function App() {
 
   const headerComponent = <Header windowWidth={windowWidth} isLoggedIn={isLoggedIn} />
   const profileComponent = <Profile setCurrentUser={setCurrentUser} setIsLoggedIn={setIsLoggedIn} />
-  const loginComponent = (
-    <Login
-      setIsLoggedIn={setIsLoggedIn}
-      setCurrentUser={setCurrentUser}
-      setIsLoading={setIsLoading}
-    />
+  const loginComponent = <Login setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />
+  const registerComponenet = (
+    <Register setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />
   )
   const moviesComponent = <Movies windowWidth={windowWidth} />
 
@@ -119,28 +112,9 @@ function App() {
                     }
                   />
                 }
-                {
-                  <Route
-                    path="/signin"
-                    element={
-                      <ProtectedRouteElementIsLoggedIn
-                        element={loginComponent}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
-                  />
-                }
-                {
-                  <Route
-                    path="/signup"
-                    element={
-                      <ProtectedRouteElementIsLoggedIn
-                        element={<Register />}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
-                  />
-                }
+
+                {!isLoggedIn && <Route path="/signin" element={loginComponent} />}
+                {!isLoggedIn && <Route path="/signup" element={registerComponenet} />}
                 {
                   <Route
                     path="/profile"
