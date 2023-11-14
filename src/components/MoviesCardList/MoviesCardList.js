@@ -1,5 +1,6 @@
 import React from 'react'
 import MoviesCard from '../MoviesCard/MoviesCard'
+import { numberOfDisplayedMovies, itemWidth } from '../../tools/Const'
 
 export default function MoviesCardList({
   windowWidth,
@@ -13,18 +14,18 @@ export default function MoviesCardList({
   const [filmsMultiplier, setFilmsMultiplier] = React.useState(3)
 
   React.useEffect(() => {
-    if (1000 < windowWidth) {
-      setShowedMovies(foundMovies.slice(0, 12))
-      setFilmsMultiplier(3)
-    }
-    if (500 < windowWidth && windowWidth <= 1000) {
-      setShowedMovies(foundMovies.slice(0, 8))
-      setFilmsMultiplier(2)
+    function showInitailMovies({ display, add }) {
+      return [setShowedMovies(foundMovies.slice(0, display)), setFilmsMultiplier(add)]
     }
 
-    if (windowWidth <= 500) {
-      setShowedMovies(foundMovies.slice(0, 5))
-      setFilmsMultiplier(2)
+    if (itemWidth.threeColumns < windowWidth) {
+      showInitailMovies(numberOfDisplayedMovies.pcScreen)
+    }
+    if (itemWidth.twoColumns < windowWidth && windowWidth <= itemWidth.threeColumns) {
+      showInitailMovies(numberOfDisplayedMovies.tabletScreen)
+    }
+    if (windowWidth <= itemWidth.twoColumns) {
+      showInitailMovies(numberOfDisplayedMovies.mobileScreen)
     }
   }, [foundMovies, setShowedMovies, windowWidth])
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { movieImgUrl } from '../../tools/Const'
+import { movieImgUrl, setMovieDuration } from '../../tools/Const'
 
 export default function MoviesCard({ movieData, handleSaveMovie, savedId, handleDeleteMovie }) {
   const [isMovieSaved, setIsMovieSaved] = React.useState(false)
@@ -9,9 +9,6 @@ export default function MoviesCard({ movieData, handleSaveMovie, savedId, handle
       setIsMovieSaved(true)
     }
   }, [savedId])
-
-  const movieDurationHours = Math.floor(movieData.duration / 60)
-  const movieDuration = `${movieDurationHours}ч ${movieData.duration - movieDurationHours * 60}мин`
 
   function saveMovie() {
     handleSaveMovie(movieData)
@@ -29,7 +26,7 @@ export default function MoviesCard({ movieData, handleSaveMovie, savedId, handle
       type="button"
       className={`movie-card__button movie-card__button_type_save ${
         isMovieSaved ? 'movie-card__button_added' : ''
-      } button`}>
+      }`}>
       {isMovieSaved ? '✓' : 'Сохранить'}
     </button>
   )
@@ -46,7 +43,7 @@ export default function MoviesCard({ movieData, handleSaveMovie, savedId, handle
       </a>
       <div className="movie-card__information">
         <h2 className="movie-card__title">{movieData.nameRU}</h2>
-        <p className="movie-card__duration">{movieDuration}</p>
+        <p className="movie-card__duration">{setMovieDuration(movieData)}</p>
       </div>
     </article>
   )

@@ -1,29 +1,44 @@
 import React from 'react'
 import { getMovies } from '../../utils/MoviesApi'
 import { useLocation } from 'react-router-dom'
-import letSearch from '../../tools/Search'
 
 export default function SearchForm({
-  setFoundMovies,
   setLoader,
-  setMoviesNotFound,
   searchCheckbox,
   setSearchCheckbox,
-  searchInput,
-  setSearchInput,
-  setShownSavedMovies,
-  savedMovies,
-  setSavedMoviesNotFound,
+  setSearchInputMovieFilter,
   setBeatfilmMovies,
   beatfilmMovies,
+  searchInput,
+  setSearchInput,
+  searchInputSavedMovies,
+  setSearchInputSavedMovies,
+  setSearchInputSavedMoviesFilter,
+  searchCheckboxSavedMovies,
+  setSearchCheckboxSavedMovies,
 }) {
+  // movies input err
   const [searchInputErr, setSearchInputErr] = React.useState('')
-  const [searchInputSaveMovies, setSearchInputSaveMovies] = React.useState('')
+
+  // saved-movies input err
   const [searchInputErrSaveMovies, setSearchInputErrSaveMovies] = React.useState('')
 
   const [isRequestSending, setIsRequestSending] = React.useState(false)
+
   const location = useLocation()
 
+  //! сброс ошибок инпута при смене страницы
+  React.useEffect(() => {
+    if (location.pathname !== '/saved-movies') {
+      setSearchInputErrSaveMovies('')
+    }
+
+    if (location.pathname !== '/movies') {
+      setSearchInputErr('')
+    }
+  }, [location.pathname])
+
+  //! movies, saved-movies inputs listeners
   function handleChangeSearchInput(e) {
     if (location.pathname === '/movies') {
       setSearchInput(e.target.value)
@@ -31,7 +46,7 @@ export default function SearchForm({
         setSearchInputErr('')
       }
     } else {
-      setSearchInputSaveMovies(e.target.value)
+      setSearchInputSavedMovies(e.target.value)
       if (e.target.value.length > 0) {
         setSearchInputErrSaveMovies('')
       }
@@ -40,27 +55,14 @@ export default function SearchForm({
 
   function handleChangeSearchСheckbox(e) {
     setSearchCheckbox(e.target.checked)
+    localStorage.setItem('lastCheckbox', JSON.stringify(e.target.checked))
   }
 
-  function searchMovies(movies) {
-    const searchResult = movies.filter((movie) => letSearch(movie, searchInput, searchCheckbox))
-    if (searchResult.length === 0) {
-      setMoviesNotFound(true)
-    } else {
-      setMoviesNotFound(false)
-    }
-    const lastSearch = {
-      input: searchInput,
-      checkbox: searchCheckbox,
-      result: searchResult,
-    }
-
-    localStorage.setItem('lastSearch', JSON.stringify(lastSearch))
-
-    setFoundMovies(searchResult)
-    setLoader(false)
+  function handleChangeSearchСheckboxSaveMovies(e) {
+    setSearchCheckboxSavedMovies(e.target.checked)
   }
 
+  //! Submit movies
   function handleFormSubmit(e) {
     e.preventDefault()
     if (searchInput === '') {
@@ -68,47 +70,41 @@ export default function SearchForm({
       return
     }
     if (beatfilmMovies.length > 0) {
-      searchMovies(beatfilmMovies)
+      setSearchInputMovieFilter(searchInput)
+      localStorage.setItem('lastInput', searchInput)
+      localStorage.setItem('lastCheckbox', searchCheckbox)
       return
     }
     setIsRequestSending(true)
-    setFoundMovies([])
     setLoader(true)
     getMovies()
       .then((res) => {
         setBeatfilmMovies(res)
-        searchMovies(res)
+        setSearchInputMovieFilter(searchInput)
+        localStorage.setItem('lastInput', searchInput)
+        localStorage.setItem('lastCheckbox', JSON.stringify(searchCheckbox))
+        localStorage.setItem('movies', JSON.stringify(res))
       })
-      .catch((err) => {
-        setLoader(false)
-        console.log(err)
+      .catch(() => {
         setSearchInputErr('Что-то пошло не так')
         setTimeout(() => {
           setSearchInputErr('')
         }, 3000)
       })
       .finally(() => {
+        setLoader(false)
         setIsRequestSending(false)
       })
   }
 
+  //! Submit saved-movies
   function handleFormSubmitSavedMovies(e) {
     e.preventDefault()
-    if (searchInputSaveMovies === '') {
+    if (searchInputSavedMovies === '') {
       setSearchInputErrSaveMovies('Нужно ввести ключевое слово')
       return
     }
-    const searchResult = savedMovies.filter((movie) =>
-      letSearch(movie, searchInputSaveMovies, searchCheckbox)
-    )
-
-    if (searchResult.length === 0) {
-      setSavedMoviesNotFound(true)
-    } else {
-      setSavedMoviesNotFound(false)
-    }
-
-    setShownSavedMovies(searchResult)
+    setSearchInputSavedMoviesFilter(searchInputSavedMovies)
   }
 
   return (
@@ -118,7 +114,7 @@ export default function SearchForm({
       className="movies__search-form search-form">
       <div className="search-form__input-wrapper">
         <input
-          value={location.pathname === '/movies' ? searchInput : searchInputSaveMovies}
+          value={location.pathname === '/movies' ? searchInput : searchInputSavedMovies}
           onChange={handleChangeSearchInput}
           className="search-form__input"
           type="text"
@@ -136,12 +132,22 @@ export default function SearchForm({
       </p>
       <div className="search-form__switch-wrapper">
         <label className="search-form__switch">
-          <input
-            checked={searchCheckbox ? true : ''}
-            onChange={handleChangeSearchСheckbox}
-            className="search-form__check-input"
-            type="checkbox"
-          />
+          {location.pathname === '/movies' && (
+            <input
+              checked={searchCheckbox ? true : ''}
+              onChange={handleChangeSearchСheckbox}
+              className="search-form__check-input"
+              type="checkbox"
+            />
+          )}
+          {location.pathname === '/saved-movies' && (
+            <input
+              checked={searchCheckboxSavedMovies ? true : ''}
+              onChange={handleChangeSearchСheckboxSaveMovies}
+              className="search-form__check-input"
+              type="checkbox"
+            />
+          )}
           <span className="search-form__slider"></span>
         </label>
         <p className="search-form__switch-text">Короткометражки</p>

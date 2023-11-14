@@ -12,7 +12,7 @@ export default function MoviesCardSaved({ movieData, handleDeleteMovie }) {
     <button
       onClick={deleteMovie}
       type="button"
-      className="button movie-card__button movie-card__button_type_del"></button>
+      className="movie-card__button movie-card__button_type_del"></button>
   )
 
   return (
