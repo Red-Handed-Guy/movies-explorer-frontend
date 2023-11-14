@@ -62,7 +62,7 @@ export default function Movies({ windowWidth }) {
     const lastCheckbox = JSON.parse(localStorage.getItem('lastCheckbox'))
     const lastMovies = JSON.parse(localStorage.getItem('movies'))
 
-    if (lastInput === undefined || lastCheckbox === undefined || lastMovies === undefined) {
+    if (lastInput === null || lastCheckbox === null || lastMovies === null) {
       setSearchInputMovieFilter('')
       setSearchCheckbox(false)
       setBeatfilmMovies([])

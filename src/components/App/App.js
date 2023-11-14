@@ -18,6 +18,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
   const [currentUser, setCurrentUser] = React.useState({})
+  
+
+
 
   React.useEffect(() => {
     setIsLoading(true)
