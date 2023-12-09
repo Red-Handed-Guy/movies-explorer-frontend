@@ -19,9 +19,6 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(true)
   const [currentUser, setCurrentUser] = React.useState({})
   
-
-
-
   React.useEffect(() => {
     setIsLoading(true)
     getUser()
