@@ -43,6 +43,10 @@
   padding: 13px 0 15px 0;
 }
 
+.blue-button_disabled {
+  background-color: grey;
+}
+
 @media (max-width: 500px) {
   .blue-button {
     font-size: 12px;

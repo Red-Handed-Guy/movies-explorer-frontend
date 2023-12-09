@@ -1,20 +1,50 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-const userDefault = {
-  name: 'Олег',
-  email: 'Oleg@verni.dengi',
-}
+import { validate } from 'email-validator'
+import { regName } from '../../tools/Const'
+import { CurrentUserContext } from '../Context/Context'
+import { logout, patchUser } from '../../utils/MainApi'
 
-export default function Profile() {
-  const [user, setUser] = React.useState(userDefault)
-  const [name, setName] = React.useState(user.name)
-  const [email, setEmail] = React.useState(user.email)
+export default function Profile({ setIsLoggedIn, setCurrentUser }) {
+  const currentUser = React.useContext(CurrentUserContext)
+
+  const [name, setName] = React.useState(currentUser.name)
+  const [nameErr, setNameErr] = React.useState('')
+  const [nameValid, setNameValid] = React.useState(true)
+
+  const [email, setEmail] = React.useState(currentUser.email)
+  const [emailErr, setEmailErr] = React.useState('')
+  const [emailValid, setEmailValid] = React.useState(true)
+
+  const [submitErr, setSubmitErr] = React.useState('')
   const [isEditing, setIsEditing] = React.useState(false)
+
+  const [isEditingErrOk, setIsEditinErrOk] = React.useState(false)
+
+  const [isRequestSending, setIsRequestSending] = React.useState(false)
 
   const navigate = useNavigate()
 
-  function logOut() {
-    navigate('/')
+  React.useEffect(() => {
+    setName(currentUser.name)
+    setEmail(currentUser.email)
+  }, [currentUser])
+
+  function handleLogout() {
+    logout()
+      .then(() => {
+        setCurrentUser({})
+        localStorage.clear()
+        setIsLoggedIn(false)
+        navigate('/', { replace: true })
+      })
+      .catch((err) => {
+        setSubmitErr('Что-то пошло не так')
+        console.log(err)
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
   }
 
   function handleEdit() {
@@ -23,26 +53,79 @@ export default function Profile() {
 
   function handleChangeName(e) {
     setName(e.target.value)
+    setNameValid(regName.test(e.target.value))
+    if (e.target.value.length === 1) {
+      setNameErr('Имя должно быть не короче 2 символов')
+    }
+    if (e.target.value.length > 1 && !regName.test(e.target.value)) {
+      setNameErr(`Поле 'Имя' может содержать только латиницу, кириллицу, пробел или дефис`)
+    }
+
+    if (e.target.value.length > 1 && regName.test(e.target.value)) {
+      setNameErr('')
+    }
+
+    if (e.target.value === '') {
+      setNameErr(`Заполните поле 'Имя'`)
+    }
   }
 
   function handleChangeEmail(e) {
     setEmail(e.target.value)
+    setEmailValid(validate(e.target.value))
+    if (!validate(e.target.value)) {
+      setEmailErr('Невалидный E-mail')
+    } else {
+      setEmailErr('')
+    }
+    if (e.target.value === '') {
+      setEmailErr('Заполните поле E-mail')
+    }
   }
 
   function submitForm(e) {
     e.preventDefault()
-    setUser({
-      name: name,
-      email: email,
-    })
-    setIsEditing(false)
+    if (name === currentUser.name && email === currentUser.email) {
+      setSubmitErr('')
+      setIsEditing(false)
+      return
+    }
+
+    setIsRequestSending(true)
+    patchUser({ name, email })
+      .then((res) => {
+        setCurrentUser(res)
+        setSubmitErr('Изменения прошли успешно!')
+        setIsEditinErrOk(true)
+        setIsEditing(false)
+        setTimeout(() => {
+          setSubmitErr('')
+          setIsEditinErrOk(false)
+        }, 3000)
+      })
+      .catch((err) => {
+        if (err.includes('409')) {
+          setSubmitErr('Пользователь с таким E-mail уже существует')
+        } else {
+          setSubmitErr('Что-то пошло не так')
+        }
+        setTimeout(() => {
+          setSubmitErr('')
+        }, 3000)
+      })
+      .finally(() => {
+        setIsRequestSending(false)
+      })
   }
+
+  const submitButtonStatus = nameValid && emailValid
+  const dataIsEqual = currentUser.name === name && currentUser.email === email
 
   return (
     <main className="main profile">
       <div className="profile__wrapper">
-        <h1 className="profile__title">Привет, {user.name}!</h1>
-        <form onSubmit={submitForm} className="profile__form">
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+        <form noValidate onSubmit={submitForm} className="profile__form">
           <ul className="profile__info">
             <li className="profile__item">
               <p className="profile__item-text">Имя</p>
@@ -50,20 +133,22 @@ export default function Profile() {
                 <input
                   minLength={2}
                   maxLength={30}
-                  onInput={handleChangeName}
+                  required
+                  onChange={handleChangeName}
                   className="profile__input"
                   type="text"
                   placeholder="Имя"
                   value={name}
                 />
               ) : (
-                <p className="profile__item-text">{user.name}</p>
+                <p className="profile__item-text">{currentUser.name}</p>
               )}
             </li>
             <li className="profile__item">
               <p className="profile__item-text">E-mail</p>
               {isEditing ? (
                 <input
+                  required
                   onInput={handleChangeEmail}
                   className="profile__input"
                   type="email"
@@ -71,14 +156,27 @@ export default function Profile() {
                   value={email}
                 />
               ) : (
-                <p className="profile__item-text">{user.email}</p>
+                <p className="profile__item-text">{currentUser.email}</p>
               )}
             </li>
+            <p className={`profile__form-err ${isEditingErrOk ? 'profile__form-err_color' : ''}`}>
+              {submitErr}
+              <>{nameErr}</>
+              <br />
+              <>{emailErr}</>
+            </p>
           </ul>
+
           {isEditing && (
             <div className="profile__submit-button-wrapper">
-              <p className="profile__form-err">Lorem ipsum dolor sit amet.</p>
-              <button type="submit" className="profile__submit-button blue-button button">
+              <button
+                disabled={submitButtonStatus && !isRequestSending && !dataIsEqual ? '' : true}
+                type="submit"
+                className={`button blue-button profile__submit-button ${
+                  submitButtonStatus && !isRequestSending && !dataIsEqual
+                    ? ''
+                    : 'blue-button_disabled'
+                }`}>
                 Сохранить
               </button>
             </div>
@@ -91,7 +189,7 @@ export default function Profile() {
             Редактировать
           </button>
           <button
-            onClick={logOut}
+            onClick={handleLogout}
             type="button"
             className="profile__button link profile__button_color_pink">
             Выйти из аккаунта

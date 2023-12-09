@@ -1,32 +1,65 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import MoviesCard from '../MoviesCard/MoviesCard'
+import { numberOfDisplayedMovies, itemWidth } from '../../tools/Const'
 
-export default function MoviesCardList() {
-  const [movies, setMovies] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8])
-  const location = useLocation()
+export default function MoviesCardList({
+  windowWidth,
+  foundMovies,
+  setShowedMovies,
+  showedMovies,
+  handleSaveMovie,
+  savedMovies,
+  handleDeleteMovie,
+}) {
+  const [filmsMultiplier, setFilmsMultiplier] = React.useState(3)
 
-  function addCards() {
-    let newMovies = []
-    for (let i = 1; i < 10; i++) {
-      newMovies.push(movies.at(-1) + i)
+  React.useEffect(() => {
+    function showInitailMovies({ display, add }) {
+      return [setShowedMovies(foundMovies.slice(0, display)), setFilmsMultiplier(add)]
     }
-    setMovies([...movies, ...newMovies])
+
+    if (itemWidth.threeColumns < windowWidth) {
+      showInitailMovies(numberOfDisplayedMovies.pcScreen)
+    }
+    if (itemWidth.twoColumns < windowWidth && windowWidth <= itemWidth.threeColumns) {
+      showInitailMovies(numberOfDisplayedMovies.tabletScreen)
+    }
+    if (windowWidth <= itemWidth.twoColumns) {
+      showInitailMovies(numberOfDisplayedMovies.mobileScreen)
+    }
+  }, [foundMovies, setShowedMovies, windowWidth])
+
+  function getMoreMovies() {
+    setShowedMovies([
+      ...showedMovies,
+      ...foundMovies.slice(showedMovies.length, showedMovies.length + filmsMultiplier),
+    ])
+    console.log()
   }
+
   return (
     <section className="movies-list" aria-label="Список фильмов">
       <div className="movies-list__cards">
-        {movies.map((movie) => {
+        {showedMovies.map((movieData) => {
+          let savedId
+          savedMovies.forEach((savedMovie) => {
+            if (savedMovie.movieId === movieData.id) {
+              savedId = savedMovie._id
+            }
+          })
           return (
             <MoviesCard
-              key={movie}
-              src="https://c.wallhere.com/photos/6d/a1/women_brunette_lingerie_bathrobes_see_through_clothing_lace_chair_sitting-1176512.jpg!d"
+              key={movieData.id}
+              movieData={movieData}
+              handleSaveMovie={handleSaveMovie}
+              savedId={savedId}
+              handleDeleteMovie={handleDeleteMovie}
             />
           )
         })}
       </div>
-      {location.pathname === '/movies' && (
-        <button onClick={addCards} className="movies-list__button button">
+      {!(foundMovies.length === showedMovies.length) && (
+        <button onClick={getMoreMovies} className="movies-list__button button">
           Ещё
         </button>
       )}

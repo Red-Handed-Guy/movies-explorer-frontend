@@ -85,11 +85,16 @@
   top: 14px;
   right: 14px;
   border: none;
-  opacity: 0;
   visibility: hidden;
   cursor: pointer;
   box-sizing: border-box;
   transition: all 0.4s;
+}
+
+@media (max-width: 500px) {
+  .movie-card__button {
+    visibility: visible;
+  }
 }
 
 .movie-card__button_type_save {
@@ -118,9 +123,14 @@
 }
 
 .movie-card:hover .movie-card__button {
-  opacity: 1;
   visibility: visible;
 }
+
+.movie-card:hover .movie-card__button:hover {
+  opacity: 0.8;
+}
+
+
 
 .movie-card__button_added {
   opacity: 1;
