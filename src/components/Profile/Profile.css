@@ -18,7 +18,7 @@
   .profile {
     justify-content: start;
     padding: 70px 0 0;
-    row-gap: 363px;
+    row-gap: 260px;
   }
 }
 
@@ -154,7 +154,7 @@
 
 @media (max-width: 500px) {
   .profile__submit-button-wrapper {
-    margin-top: 349px;
+    margin-top: 246px;
   }
 }
 

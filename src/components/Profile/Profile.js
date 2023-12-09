@@ -58,7 +58,9 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
       setNameErr('Имя должно быть не короче 2 символов')
     }
     if (e.target.value.length > 1 && !regName.test(e.target.value)) {
-      setNameErr(`Поле 'Имя' может содержать только латиницу, кириллицу, пробел или дефис`)
+      setNameErr(
+        `Поле 'Имя' может содержать только латиницу, кириллицу, пробел или дефис`
+      )
     }
 
     if (e.target.value.length > 1 && regName.test(e.target.value)) {
@@ -119,47 +121,49 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
   }
 
   const submitButtonStatus = nameValid && emailValid
-  const dataIsEqual = currentUser.name === name && currentUser.email === email
 
   return (
-    <main className="main profile">
-      <div className="profile__wrapper">
-        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-        <form noValidate onSubmit={submitForm} className="profile__form">
-          <ul className="profile__info">
-            <li className="profile__item">
-              <p className="profile__item-text">Имя</p>
+    <main className='main profile'>
+      <div className='profile__wrapper'>
+        <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
+        <form noValidate onSubmit={submitForm} className='profile__form'>
+          <ul className='profile__info'>
+            <li className='profile__item'>
+              <p className='profile__item-text'>Имя</p>
               {isEditing ? (
                 <input
                   minLength={2}
                   maxLength={30}
                   required
                   onChange={handleChangeName}
-                  className="profile__input"
-                  type="text"
-                  placeholder="Имя"
+                  className='profile__input'
+                  type='text'
+                  placeholder='Имя'
                   value={name}
                 />
               ) : (
-                <p className="profile__item-text">{currentUser.name}</p>
+                <p className='profile__item-text'>{currentUser.name}</p>
               )}
             </li>
-            <li className="profile__item">
-              <p className="profile__item-text">E-mail</p>
+            <li className='profile__item'>
+              <p className='profile__item-text'>E-mail</p>
               {isEditing ? (
                 <input
                   required
                   onInput={handleChangeEmail}
-                  className="profile__input"
-                  type="email"
-                  placeholder="E-mail"
+                  className='profile__input'
+                  type='email'
+                  placeholder='E-mail'
                   value={email}
                 />
               ) : (
-                <p className="profile__item-text">{currentUser.email}</p>
+                <p className='profile__item-text'>{currentUser.email}</p>
               )}
             </li>
-            <p className={`profile__form-err ${isEditingErrOk ? 'profile__form-err_color' : ''}`}>
+            <p
+              className={`profile__form-err ${
+                isEditingErrOk ? 'profile__form-err_color' : ''
+              }`}>
               {submitErr}
               <>{nameErr}</>
               <br />
@@ -168,12 +172,12 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
           </ul>
 
           {isEditing && (
-            <div className="profile__submit-button-wrapper">
+            <div className='profile__submit-button-wrapper'>
               <button
-                disabled={submitButtonStatus && !isRequestSending && !dataIsEqual ? '' : true}
-                type="submit"
+                disabled={submitButtonStatus && !isRequestSending ? '' : true}
+                type='submit'
                 className={`button blue-button profile__submit-button ${
-                  submitButtonStatus && !isRequestSending && !dataIsEqual
+                  submitButtonStatus && !isRequestSending
                     ? ''
                     : 'blue-button_disabled'
                 }`}>
@@ -184,14 +188,17 @@ export default function Profile({ setIsLoggedIn, setCurrentUser }) {
         </form>
       </div>
       {!isEditing && (
-        <div className="profile__buttons-wrapper">
-          <button type="button" onClick={handleEdit} className="profile__button link">
+        <div className='profile__buttons-wrapper'>
+          <button
+            type='button'
+            onClick={handleEdit}
+            className='profile__button link'>
             Редактировать
           </button>
           <button
             onClick={handleLogout}
-            type="button"
-            className="profile__button link profile__button_color_pink">
+            type='button'
+            className='profile__button link profile__button_color_pink'>
             Выйти из аккаунта
           </button>
         </div>
