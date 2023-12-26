@@ -16,17 +16,38 @@
 - Сайт адаптирован для экранов ПК, планшетов и мобильных экранов
 
 
-
-
 ## Tech Stack
 
-React, JS, CSS, HTML
-
+![Static Badge](https://img.shields.io/badge/HTML5-gray?style=for-the-badge&logo=HTML5)
+![Static Badge](https://img.shields.io/badge/CSS3-black?style=for-the-badge&logo=CSS3&logoColor=%23fff&color=%23254BDD)
+![Static Badge](https://img.shields.io/badge/JavaScript-black?style=for-the-badge&logo=JavaScript&logoColor=%23EFD81D&color=%23000)
+![Static Badge](https://img.shields.io/badge/React-black?style=for-the-badge&logo=React)
 
 
 ## Demo
 
 Ссылка на рабочий сайт: https://red-movies.nomoredomainsrocks.ru
+
+
+## Deployment
+
+1) Скачать архив с ветки Main
+2) Разархивировать в любую папку
+3) С помощью терминала git перейти в эту папку
+
+4) Установить зависимости командой
+```bash
+  npm ci
+```
+5) Собрать билд командой
+```bash
+  npm run build
+```
+6) Запустить билд командой
+```bash
+  npm run start
+```
+7) Клиент запустится на 3001 порту (поменяйте localhost на 127.0.0.1 в адресной строке) и будет посылать запросы на адрес `http://127.0.0.1:3000`
 
 
 ## Related
